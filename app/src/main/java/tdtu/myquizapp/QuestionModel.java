@@ -1,12 +1,13 @@
 package tdtu.myquizapp;
 
 public class QuestionModel {
-    private String question,optionA,optionB,optionC,optionD,correctANS;
+    private String question,optionA,optionB,optionC,optionD,correctANS,url;
     private  int setNo;
+
     public QuestionModel(){
 
     }
-    public QuestionModel(String question, String optionA, String optionB, String optionC, String optionD, String correctANS, int setNo)
+    public QuestionModel(String question,String url, String optionA, String optionB, String optionC, String optionD, String correctANS, int setNo)
     {
         this.setNo = setNo;
         this.question = question;
@@ -15,6 +16,15 @@ public class QuestionModel {
         this.optionC = optionC;
         this.optionD = optionD;
         this.correctANS = correctANS;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getQuestion() {

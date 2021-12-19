@@ -12,7 +12,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity {
-    private Button startButton,bookmarkButton;
+    private Button startButton,bookmarkButton, learnButton;
 
 
     @Override
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         startButton = findViewById(R.id.start_btn);
         bookmarkButton = findViewById(R.id.bookmark_btn);
-
+        learnButton = findViewById(R.id.learn_btn);
         MobileAds.initialize(this);
         loadAds();
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent bookmarkIntent = new Intent(MainActivity.this,BookmarkActivity.class);
                 startActivity(bookmarkIntent);
+            }
+        });
+        learnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent trafficsignIntent = new Intent(MainActivity.this,TrafficSign.class);
+                startActivity(trafficsignIntent);
             }
         });
     }

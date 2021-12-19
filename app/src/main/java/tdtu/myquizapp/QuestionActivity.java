@@ -8,9 +8,11 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -62,6 +65,8 @@ public class QuestionActivity extends AppCompatActivity {
     private Gson gson;
     private int matchedQuestionPostition;
     private InterstitialAd interstitialAd;
+
+    private ImageView imageView;
     @Override
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +77,7 @@ public class QuestionActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         loadAds();
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
         question=findViewById(R.id.question);
         noIndicator=findViewById(R.id.no_indicator);
@@ -79,6 +85,8 @@ public class QuestionActivity extends AppCompatActivity {
         optionsContainer=findViewById(R.id.options_container);
         shareBtn=findViewById(R.id.share_btn);
         nextBtn=findViewById(R.id.next_btn);
+
+
 
         preferences=getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         editor=preferences.edit();
@@ -115,25 +123,39 @@ public class QuestionActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snapshot1: snapshot.getChildren()){
                     list.add(snapshot1.getValue(QuestionModel.class));
+
                 }
+
+
+                Glide.with(QuestionActivity.this)
+                        .load(list.get(position).getUrl())
+                        .into(imageView);
                 if(list.size()>0){
 
                     for(int i=0;i<4;i++){
+
                         optionsContainer.getChildAt(i).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 checkAnswer((Button) view);
+
                             }
                         });
                     }
                     playAnim(question,0,list.get(position).getQuestion());
+
                     nextBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
 
                         public void onClick(View view) {
+
+
+
                             nextBtn.setEnabled(false);
                             nextBtn.setAlpha(0.7f);
                             enableOption(true);
+
+
                             position++;
                             if(position==list.size()){
                                 if (interstitialAd.isLoaded()) {
@@ -148,14 +170,30 @@ public class QuestionActivity extends AppCompatActivity {
                                 finish();
                                 return;
                             }
+
                             count =0;
+
+                            if(list.get(position).getUrl()==null){
+                                imageView.setVisibility(View.GONE);
+
+                            }
+                            else {
+                                imageView.setVisibility(View.VISIBLE);
+
+
+                                Glide.with(QuestionActivity.this)
+                                        .load(list.get(position).getUrl())
+                                        .into(imageView);
+                            }
                             playAnim(question,0,list.get(position).getQuestion());
+
                         }
                     });
                     shareBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String body=list.get(position).getQuestion()+"\n"+
+
                                     "A "+list.get(position).getOptionA() + "\n"+
                                     "B "+list.get(position).getOptionB() +"\n"+
                                     "C "+list.get(position).getOptionC() +"\n"+
@@ -174,6 +212,8 @@ public class QuestionActivity extends AppCompatActivity {
                     finish();
                     Toast.makeText(QuestionActivity.this,"no questions",Toast.LENGTH_SHORT).show();
                 }
+
+
                 loadingDialog.dismiss();
             }
 
@@ -216,6 +256,7 @@ public class QuestionActivity extends AppCompatActivity {
                     playAnim(optionsContainer.getChildAt(count), 0, option);
                     count++;
                 }
+
             }
             @Override
             public void onAnimationEnd(Animator animator) {

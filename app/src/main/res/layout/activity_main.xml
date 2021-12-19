@@ -36,20 +36,35 @@
             android:text="My Quiz" />
     </FrameLayout>
 
-    <Button
-        android:id="@+id/start_btn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="Start Quiz"
-        android:textStyle="bold"
-        android:background="@drawable/rounded_corners"
-        android:stateListAnimator="@null"
-        app:layout_constraintBottom_toTopOf="@+id/bookmark_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/start_btn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="104dp"
+            android:background="@drawable/rounded_corners"
+            android:stateListAnimator="@null"
+            android:text="Start Quiz"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/bookmark_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+        <Button
+            android:id="@+id/learn_btn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/rounded_corners_learn_traffic"
+            android:stateListAnimator="@null"
+            android:text="Traffic sign"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/bookmark_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
         android:id="@+id/bookmark_btn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"

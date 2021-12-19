@@ -14,7 +14,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-    <androidx.appcompat.widget.Toolbar
+
+            <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
@@ -78,6 +79,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
+
+
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
@@ -117,6 +120,13 @@
             android:textColor="@android:color/black"
             android:backgroundTint="#dbd3d3"
             android:text="Button" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars" />
+
     </LinearLayout>
 
     <Button
@@ -153,6 +163,7 @@
         app:layout_constraintStart_toEndOf="@+id/share_btn"
         app:layout_constraintTop_toBottomOf="@+id/options_container" />
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bookmark_btn"
         android:layout_width="wrap_content"
@@ -165,6 +176,7 @@
         app:srcCompat="@drawable/bookmark_border" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
