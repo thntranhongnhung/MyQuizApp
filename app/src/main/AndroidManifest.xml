@@ -18,6 +18,9 @@
             android:name=".ScoreActivity"
             android:exported="true" />
         <activity
+            android:name=".TrafficSign"
+            android:exported="true" />
+        <activity
             android:name=".SetsActivity"
             android:exported="true" />
         <activity
@@ -25,6 +28,9 @@
             android:exported="true" />
         <activity
             android:name=".CategoriesActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ListTrafficSignActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

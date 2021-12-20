@@ -46,6 +46,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
+
     private TextView question,noIndicator;
     private FloatingActionButton bookmarkBtn;
     private LinearLayout optionsContainer;

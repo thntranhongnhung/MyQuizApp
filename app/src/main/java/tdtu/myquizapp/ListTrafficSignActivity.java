@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,55 +25,60 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesActivity extends AppCompatActivity {
+public class ListTrafficSignActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-
+    private String title;
     private Dialog loadingDialog;
-
+    private InterstitialAd mInterstitialAd;
     private RecyclerView recyclerView;
-    private List<CategoryModel> list;
+    private List<TrafficSignListModel> listTrafficSign;
+    private int setNo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.list_traffic_sign);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
-        loadAds();
+        //loadAds();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Thư mục bài tập");
+        getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        setNo=getIntent().getIntExtra("sets",1);
+        title=getIntent().getStringExtra("title");
         loadingDialog = new Dialog(this);
         loadingDialog.setContentView(R.layout.loading);
         loadingDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_corners));
         loadingDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
         loadingDialog.setCancelable(false);
 
-        recyclerView = findViewById(R.id.traffic_sign);
+        recyclerView = findViewById(R.id.list_traffic_sign_item);
         LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        list=new ArrayList<>();
+        listTrafficSign=new ArrayList<>();
 
 
 
-        CategoryAdapter categoryAdapter =new CategoryAdapter(list);
-        recyclerView.setAdapter(categoryAdapter);
+        ListTrafficSignAdapter ListTrafficSignAdapter =new ListTrafficSignAdapter(listTrafficSign);
+        recyclerView.setAdapter(ListTrafficSignAdapter);
         loadingDialog.show();
-        myRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("ListTrafficSign").orderByChild("sets").equalTo(setNo).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snapshot1:snapshot.getChildren()){
-                    list.add(snapshot1.getValue(CategoryModel.class));
+                    listTrafficSign.add(snapshot1.getValue(TrafficSignListModel.class));
                 }
-                categoryAdapter.notifyDataSetChanged();
+
+                ListTrafficSignAdapter.notifyDataSetChanged();
                 loadingDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(CategoriesActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListTrafficSignActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
                 loadingDialog.dismiss();
                 finish();
             }

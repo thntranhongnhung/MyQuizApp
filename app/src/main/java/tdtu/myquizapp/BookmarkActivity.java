@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -42,7 +41,7 @@ public class BookmarkActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("My Bookmarks");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerView = findViewById(R.id.bookmark);
+        recyclerView = findViewById(R.id.list_traffic_sign_item);
 
         preferences=getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         editor=preferences.edit();

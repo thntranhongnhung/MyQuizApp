@@ -23,23 +23,23 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesActivity extends AppCompatActivity {
+public class TrafficSign extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
     private Dialog loadingDialog;
 
     private RecyclerView recyclerView;
-    private List<CategoryModel> list;
+    private List<TrafficSignModel> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+        setContentView(R.layout.activity_traffic_sign);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         loadAds();
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Thư mục bài tập");
+        getSupportActionBar().setTitle("Biển báo giao thông");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         loadingDialog = new Dialog(this);
@@ -56,22 +56,22 @@ public class CategoriesActivity extends AppCompatActivity {
 
 
 
-        CategoryAdapter categoryAdapter =new CategoryAdapter(list);
-        recyclerView.setAdapter(categoryAdapter);
+        TrafficSignAdapter TrafficSignAdapter =new TrafficSignAdapter(list);
+        recyclerView.setAdapter(TrafficSignAdapter);
         loadingDialog.show();
-        myRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("TrafficSign").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot snapshot1:snapshot.getChildren()){
-                    list.add(snapshot1.getValue(CategoryModel.class));
+                    list.add(snapshot1.getValue(TrafficSignModel.class));
                 }
-                categoryAdapter.notifyDataSetChanged();
+                TrafficSignAdapter.notifyDataSetChanged();
                 loadingDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(CategoriesActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(TrafficSign.this,error.getMessage(),Toast.LENGTH_SHORT).show();
                 loadingDialog.dismiss();
                 finish();
             }
